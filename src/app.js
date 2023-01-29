@@ -21,10 +21,11 @@ const findUserById = async (id) => {
 const createNewUser = async (userObj) => {
     const newUser = {
         id: baseId++,
-        title: userObj.title,
-        synopsis: userObj.synopsis,
-        director: userObj.director,
-        year: userObj.year,
+        firstName: userObj.firstName,
+        lastName: userObj.lastName,
+        email: userObj.email,
+        password: userObj.password,
+        age: userObj.age,
     };
 
     await usersDB.push(newUser);
