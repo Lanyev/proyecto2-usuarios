@@ -1,7 +1,33 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
-const usersDB = [{}];
+
+const usersDB = [
+    {
+        id: 1,
+        firstName: "Sophia",
+        lastName: "Johnson",
+        email: "sophia.johnson@gmail.com",
+        password: "a1b2c3d4",
+        age: 29,
+    },
+    {
+        id: 2,
+        firstName: "Jacob",
+        lastName: "Williams",
+        email: "jacob.williams@gmail.com",
+        password: "f5g6h7i8",
+        age: 35,
+    },
+    {
+        id: 3,
+        firstName: "Emily",
+        lastName: "Brown",
+        email: "emily.brown@gmail.com",
+        password: "j9k0l1m2",
+        age: 18,
+    },
+];
 
 let baseId = 1;
 
@@ -77,6 +103,30 @@ app.delete("/users/:id", (req, res) => {
         res.json({
             message: "User deleted",
         });
+    } else {
+        res.status(404).json({
+            message: "Invalid id",
+        });
+    }
+});
+
+//? TODO Crear una ruta que actualice un user dependiendo de su id
+app.put("/users/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const data = usersDB.find((item) => id === item.id);
+    if (data) {
+        const index = usersDB.indexOf(data);
+        const userObj = req.body;
+        const newUser = {
+            id: id,
+            firstName: userObj.firstName,
+            lastName: userObj.lastName,
+            email: userObj.email,
+            password: userObj.password,
+            age: userObj.age,
+        };
+        usersDB.splice(index, 1, newUser);
+        res.json(newUser);
     } else {
         res.status(404).json({
             message: "Invalid id",
