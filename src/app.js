@@ -1,10 +1,6 @@
-//?Dependencies
 const express = require("express");
-//? Initial configs
 const app = express();
-//? JSON Middleware
 app.use(express.json());
-//? DB
 const usersDB = [{}];
 
 let baseId = 1;
@@ -37,7 +33,7 @@ const createNewUser = async (userObj) => {
 //* Como nosotros podemos recibir info o data del cliente
 app.get("/", (req, res) => {
     res.json({
-        message: "My server is running",
+        message: "My server is running in http://localhost:9000",
     });
 });
 //? TODO Crear una ruta que muestre todos los users
@@ -69,6 +65,27 @@ app.post("/users", (req, res) => {
     };
     usersDB.push(newUser);
     res.status(201).json(newUser);
+});
+
+//? TODO Crear una ruta que elimine un user dependiendo de su id
+app.delete("/users/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const data = usersDB.find((item) => id === item.id);
+    if (data) {
+        const index = usersDB.indexOf(data);
+        usersDB.splice(index, 1);
+        res.json({
+            message: "User deleted",
+        });
+    } else {
+        res.status(404).json({
+            message: "Invalid id",
+        });
+    }
+});
+
+app.listen(9000, () => {
+    console.log("Server is running on port 9000");
 });
 
 module.exports = app;
