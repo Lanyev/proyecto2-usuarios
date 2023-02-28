@@ -9,11 +9,16 @@ let usersDB = [
     },
 ];
 let baseId = 1;
+
+//? GET
 const getAllUsers = async () => await usersDB;
+//? GET BY ID
 const getUserById = async (id) => {
     const filteredUser = usersDB.find((user) => user.id === id);
     return await filteredUser;
 };
+
+//? POST
 const createNewUser = async (userObject) => {
     let newUser = {
         id: ++baseId,
@@ -26,6 +31,7 @@ const createNewUser = async (userObject) => {
     usersDB.push(newUser);
     return await newUser;
 };
+//? PUT
 const updateUser = async (idData, newUserData) => {
     let index;
     usersDB.some((user, i) => {
@@ -35,6 +41,7 @@ const updateUser = async (idData, newUserData) => {
     usersDB[index] = { ...usersDB[index], ...newUserData };
     return await usersDB[index];
 };
+//? PATCH
 const patchUser = async (idData, newUserData) => {
     let index;
     usersDB.some((user, i) => {
@@ -44,6 +51,7 @@ const patchUser = async (idData, newUserData) => {
     usersDB[index] = { ...usersDB[index], ...newUserData };
     return await usersDB[index];
 };
+//? DELETE
 const deleteUser = async (idDelete) => {
     const userDeleted = getUserById(idDelete);
     if (!userDeleted) return null;

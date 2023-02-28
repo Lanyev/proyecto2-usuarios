@@ -15,15 +15,15 @@ const getUserById = (req, res) => {
         .catch((err) => res.status(400).json({ err }));
 };
 const postUser = (req, res) => {
-    let user = req.body;
+    const user = req.body;
     usersControllers
         .createNewUser(user)
         .then((data) =>
             data
                 ? res.status(201).json(data)
-                : res.status(404).json({ message: "Invalid ID" })
+                : res.status(400).json({ message: "Not id" })
         )
-        .catch((message) => res.status(400).json({ message }));
+        .catch((err) => res.status(400).json(err));
 };
 const putUser = (req, res) => {
     const idUpdate = Number(req.params.id);
